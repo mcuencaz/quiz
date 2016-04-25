@@ -10,3 +10,9 @@ exports.check = function(req, res, next) {
 	var result = ((answer === 'Roma') ? 'Correcta' : 'Incorrecta');
 	res.render('quizzes/result',{result: result, answer: answer});
 };
+
+
+// Get Author
+exports.author = function(req, res, next) {
+	res.render('quizzes/author',{});
+};

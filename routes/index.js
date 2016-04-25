@@ -8,6 +8,10 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+// GET creditos
+router.get('/author', quizController.author)
+
+
 router.get('/question', quizController.question);
 router.get('/check', quizController.check);
 
