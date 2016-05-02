@@ -1,12 +1,34 @@
 var models = require('../models');
 
 
+
 // Get /quizzes
 exports.index = function(req, res, next) {
+	
+var search = req.query.search || '';
+		
+		if (search){
+
+			search = search.replace(' ', '%');
+
+			models.Quiz.findAll({where: { question: { $like: '%'+search+'%' }}}).then(function(quizzes) { 
+
+			res.render('quizzes/index.ejs', { quizzes: quizzes});
+
+		}).catch(function(error) { next(error); });
+
+
+		}else {
+
 	models.Quiz.findAll().then(function(quizzes) {
-		res.render('quizzes/index.ejs', { quizzes: quizzes});
+			
+			res.render('quizzes/index.ejs', { quizzes: quizzes});
+		
 	}).catch(function(error) { next(error); });
-};
+}};
+
+
+
 
 // Get /quizzes/:id
 exports.show = function(req, res, next) {
@@ -28,6 +50,12 @@ exports.check = function(req, res) {
 		} else { throw new Error('No existe ese quiz en la BBDD.'); }
 	}).catch(function(error) { next(error); });
 };
+
+
+
+
+
+
 
 
 // // Get /question

@@ -13,6 +13,7 @@ router.get('/quizzes', quizController.index);
 router.get('/quizzes/:quizId(\\d+)', quizController.show);
 router.get('/quizzes/:quizId(\\d+)/check', quizController.check);
 
+
 // GET creditos
 router.get('/author', quizController.author)
 
