@@ -1,9 +1,7 @@
 
+     
     <p>
-     La respuesta <strong> <%= answer %> </strong> es <%= result %>.
+     <%= result %>  <a href="/quizzes/<%= quiz.id %>?answer=<%= answer %>"> Volver </a>
     </p>
 
-    <p>
-     <a href="/question?answer=<%= answer %>"> Intentelo otra vez </a>
-    </p>
   
