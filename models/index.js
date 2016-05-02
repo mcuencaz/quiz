@@ -33,7 +33,7 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 sequelize.sync()
 .then(function() { // sunc() crea la tabla quiz
   return Quiz.count().then(function (c) {
-		if(c <= 1) { //la tabla se iniciualiza si esta vacia
+		if(c === 0) { //la tabla se iniciualiza si esta vacia
 			return Quiz.bulkCreate([ { question: 'Capital de Italia', answer: 'Roma' },
 									 { question: 'Capital de Portugal', answer: 'Lisboa'}
 									 ]).then(function() {
