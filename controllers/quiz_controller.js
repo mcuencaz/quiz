@@ -1,4 +1,18 @@
+
 var models = require('../models');
+
+// Autoload el quiz asociado a :quizId
+exports.load = function(req, res, next, quizId) {
+	models.Quiz.findById(quizId).then(function(quiz) {
+		if (quiz) {
+			req.quiz = quiz;
+			next();
+		} else {
+			next(new Error('No existe quizId=' + quizId));
+		}
+	}).catch(function(error) {next(error);});
+};
+
 
 
 
@@ -35,7 +49,7 @@ exports.show = function(req, res, next) {
 	models.Quiz.findById(req.params.quizId).then(function(quiz) {
 		if (quiz) {
 			var answer = req.query.answer || '';
-			res.render('quizzes/show', {quiz: quiz, answer: answer});
+			res.render('quizzes/show', {quiz: req.quiz, answer: answer});
 		} else { throw new Error('No existe ese quiz en la BBDD.'); }
 	}).catch(function(error) { next(error); });
 };
@@ -45,49 +59,11 @@ exports.check = function(req, res) {
 	models.Quiz.findById(req.params.quizId).then(function(quiz) {
 		if (quiz) {
 			var answer = req.query.answer || '';
-			var result = answer === quiz.answer ? 'Correcta' : 'Incorrecta';
-			res.render('quizzes/result', {quiz: quiz, result: result, answer: answer});
+			var result = answer === req.quiz.answer ? 'Correcta' : 'Incorrecta';
+			res.render('quizzes/result', {quiz: req.quiz, result: result, answer: answer});
 		} else { throw new Error('No existe ese quiz en la BBDD.'); }
 	}).catch(function(error) { next(error); });
 };
-
-
-
-
-
-
-
-
-// // Get /question
-// exports.question = function(req, res, next) {
-// 	models.Quiz.findOne() // BUsca la primera pregunta
-// 	.then(function(quiz) {
-// 		if(quiz) {
-// 			var answer = req.query.answer || '';
-// 			res
-// 			.render('quizzes/question', {question: quiz.question, answer: answer})
-// 		}
-// 		else {
-// 			throw new Error('No hay preguntas en la BBDD.');
-// 		}
-// 	}).catch(function(error) { next(error);});
-// };
-
-// // Get /check
-// exports.check = function(req, res, next) {
-// 	models
-// 	.Quiz.findOne() // Busca la primera pregunta
-// 	.then(function(quiz) {
-// 		if(quiz){
-// 	var answer = req.query.answer || "";
-// 	var result = answer === quiz.answer ? 'Correcta' : 'Incorrecta';
-// 	res.render('quizzes/result', {result: result, answer: answer});
-// 	}
-// 	else {
-// 		throw new Error('No hay preguntas en la BBDD');
-// 	}
-// 	}).catch(function (error) { next(error); });
-// };
 
 
 // Get Author
