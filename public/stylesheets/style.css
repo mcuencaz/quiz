@@ -18,4 +18,9 @@ nav		  	  { text-align: center; }
 section		  { text-align: left; }		 
 footer		  { text-align: center; }
 
-nav a 		{ margin: 0px 10px 0px 0px;}		 
+nav a 		{ margin: 0px 10px 0px 0px;}
+
+#flashinfo { color:black; }
+#flashsuccess { color:black; }
+#flashsuccess h3 { background-color: green; }
+#flasherror { color:black; }		 
