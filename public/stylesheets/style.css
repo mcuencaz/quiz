@@ -24,3 +24,4 @@ nav a 		{ margin: 0px 10px 0px 0px;}
 #flashsuccess { color:black; }
 #flashsuccess h3 { background-color: green; }
 #flasherror { color:black; }		 
+#flasherror h3 { background-color: red; }
