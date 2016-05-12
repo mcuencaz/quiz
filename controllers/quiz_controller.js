@@ -20,10 +20,38 @@ exports.load = function(req, res, next, quizId) {
 // Get /quizzes
 exports.index = function(req, res, next) {
 	
-	models.Quiz.findAll().then(function(quizzes) {
-		res.render('quizzes/index.ejs', {quizzes: quizzes});
+var search = req.query.search || '';
+		
+		if (search){
+
+			search = search.replace(' ', '%');
+
+			models.Quiz.findAll({where: { question: { $like: '%'+search+'%' }}}).then(function(quizzes) { 
+
+			res.render('quizzes/index.ejs', { quizzes: quizzes});
+
 		}).catch(function(error) { next(error); });
-};
+
+
+		}else {
+
+	models.Quiz.findAll().then(function(quizzes) {
+			
+			res.render('quizzes/index.ejs', { quizzes: quizzes});
+		
+	}).catch(function(error) { next(error); });
+}};
+
+
+
+
+
+
+	
+	// models.Quiz.findAll().then(function(quizzes) {
+	// 	res.render('quizzes/index.ejs', {quizzes: quizzes});
+	// 	}).catch(function(error) { next(error); });
+// };
 			
 
 // Get /quizzes
