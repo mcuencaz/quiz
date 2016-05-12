@@ -20,27 +20,37 @@ exports.load = function(req, res, next, quizId) {
 // Get /quizzes
 exports.index = function(req, res, next) {
 	
-var search = req.query.search || '';
-		
-		if (search){
-
-			search = search.replace(' ', '%');
-
-			models.Quiz.findAll({where: { question: { $like: '%'+search+'%' }}}).then(function(quizzes) { 
-
-			res.render('quizzes/index.ejs', { quizzes: quizzes});
-
-		}).catch(function(error) { next(error); });
-
-
-		}else {
-
 	models.Quiz.findAll().then(function(quizzes) {
+		res.render('quizzes/index.ejs', {quizzes: quizzes});
+		}).catch(function(error) { next(error); });
+};
 			
-			res.render('quizzes/index.ejs', { quizzes: quizzes});
+
+// Get /quizzes
+// exports.index = function(req, res, next) {
+	
+// var search = req.query.search || '';
 		
-	}).catch(function(error) { next(error); });
-}};
+// 		if (search){
+
+// 			search = search.replace(' ', '%');
+
+// 			models.Quiz.findAll({where: { question: { $like: '%'+search+'%' }}}).then(function(quizzes) { 
+
+// 			res.render('quizzes/index.ejs', { quizzes: quizzes});
+
+// 		}).catch(function(error) { next(error); });
+
+
+// 		}else {
+
+// 	models.Quiz.findAll().then(function(quizzes) {
+			
+// 			res.render('quizzes/index.ejs', { quizzes: quizzes});
+		
+// 	}).catch(function(error) { next(error); });
+// }};
+
 
 
 
@@ -96,6 +106,40 @@ res.render('quizzes/new', {quiz: quiz});
  		req.flash('error', 'Error al crear un Quiz: '+error.message);
  		next(error);
  	});
+ };
+
+
+ // GET /quizzes/:id/edit
+ exports.edit = function(req, res, next) {
+ 	var quiz = req.quiz; // req.quiz: autoload de instancia de quiz
+
+ 	res.render('quizzes/edit', {quiz: quiz});
+ };
+
+
+
+ // GET /quizzes/:id
+ exports.update = function(req, res, next) {
+
+ 	req.quiz.question = req.body.quiz.question;
+ 	req.quiz.answer = req.body.quiz.answer;
+
+ 	req.quiz.save({fields: ["question", "answer"]}).then(function(quiz) {
+ 		req.flash('success', 'Quiz editado con éxito.');
+ 		res.redirect('/quizzes'); //redireccion http a la lista de preguntas
+ 	}).catch(Sequelize.ValidationError, function(error) {
+
+ 		req.flash('error', 'Errores en el formulario:');
+ 		for(var i in error.errors){
+ 			req.flash('error', error.errors[i].value);
+ 		};
+
+ 	res.render('quizzes/edit', {quiz: req.quiz});
+ 	}).catch(function(error) {
+ 		req.flash('error', 'Error al editar el Quiz: '+error.message);
+ 		next(error);
+ 	});
+
  };
 
 
