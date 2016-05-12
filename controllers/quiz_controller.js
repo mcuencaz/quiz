@@ -21,6 +21,14 @@ exports.load = function(req, res, next, quizId) {
 exports.index = function(req, res, next) {
 	
 var search = req.query.search || '';
+var format = req.params.format || '';
+// var format = models.Quiz.findById(req.params.format);
+
+if(format === "json"){
+	 models.Quiz.findAll().then(function(quizzes) {
+		res.send(quizzes);
+	});
+}else { 
 		
 		if (search){
 
@@ -40,6 +48,8 @@ var search = req.query.search || '';
 			res.render('quizzes/index.ejs', { quizzes: quizzes});
 		
 	}).catch(function(error) { next(error); });
+
+	}
 }};
 
 
@@ -87,8 +97,17 @@ var search = req.query.search || '';
 exports.show = function(req, res, next) {
 	models.Quiz.findById(req.params.quizId).then(function(quiz) {
 		if (quiz) {
-			var answer = req.query.answer || '';
-			res.render('quizzes/show', {quiz: req.quiz, answer: answer});
+
+			var format = req.params.format || '';
+
+			if(format === "json"){
+	 			
+				res.send(quiz);
+	 		}else{
+
+				var answer = req.query.answer || '';
+				res.render('quizzes/show', {quiz: req.quiz, answer: answer});
+			}
 		} else { throw new Error('No existe ese quiz en la BBDD.'); }
 	}).catch(function(error) { next(error); });
 };
