@@ -47,7 +47,7 @@ var search = req.query.search || '';
 
 
 
-	
+
 	// models.Quiz.findAll().then(function(quizzes) {
 	// 	res.render('quizzes/index.ejs', {quizzes: quizzes});
 	// 	}).catch(function(error) { next(error); });
@@ -170,6 +170,16 @@ res.render('quizzes/new', {quiz: quiz});
 
  };
 
+
+// DELETE /quizzes/:id
+exports.destroy = function(req, res, next) {
+	req.quiz.destroy().then( function() {
+		req.flash('success', 'Quiz borrado con éxito ');
+		res.redirect('/quizzes');
+	}).catch( function(error){
+		req.flash('error', 'Error al editar el Quiz: '+error.message);
+	});
+};
 
 
 // Get Author
