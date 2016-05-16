@@ -25,7 +25,14 @@ return sequelize.define('User',
 	  		type: DataTypes.BOOLEAN,
 	  		defaultValue: false
 	  	}
-});
+	},
+	{ instanceMethods: { 
+			verifyPassword: function(password) {
+				return encryptPassword(password, this.salt) === this.password;
+			}
+		}
+
+	});
 
 };
 
