@@ -21,7 +21,7 @@ module.exports = {
                     defaultValue: false},
         createdAt: { type: Sequelize.DATE, 
                       allowNull: false},
-        createdAt: { type: Sequelize.DATE, 
+        updatedAt: { type: Sequelize.DATE, 
                       allowNull: false}
         },
         {sync: {force:true}
