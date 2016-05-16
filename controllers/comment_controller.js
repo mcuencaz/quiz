@@ -22,7 +22,7 @@ exports.create = function(req, res, next) {
 
 	comment.save().then(function(comment) {
 		req.flash('success', 'Comentario creado con éxito.');
-		res.reqdirect('/quizzes/' + req.quiz.id);
+		res.redirect('/quizzes/' + req.quiz.id);
 	}).catch(Sequelize.ValidationError, function(error) {
 
 		req.flash('error', 'Errores en el formulario:');
@@ -32,7 +32,7 @@ exports.create = function(req, res, next) {
 
 		res.render('comments/new', { comment: comment,
 									 quiz: req.quiz});
-	}).catch(funtion(error) {
+	}).catch(function(error) {
 		req.flash('error', 'Error al crear un Comentario: '+error.message);
 		next(error);
 	});
