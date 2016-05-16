@@ -29,22 +29,22 @@ var sequelize = new Sequelize(url,
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 
 
-// sequelize.sync() crea e inicializa tabla de preguntas en DB
-sequelize.sync()
-.then(function() { // sunc() crea la tabla quiz
-  return Quiz.count().then(function (c) {
-		if(c === 0) { //la tabla se iniciualiza si esta vacia
-			return Quiz.bulkCreate([ { question: 'Capital de Italia', answer: 'Roma' },
-									 { question: 'Capital de Portugal', answer: 'Lisboa'}
-									 ]).then(function() {
-				console.log('Base de datos inicializada con datos');
-			});
+	// // sequelize.sync() crea e inicializa tabla de preguntas en DB
+	// sequelize.sync()
+	// .then(function() { // sunc() crea la tabla quiz
+	//   return Quiz.count().then(function (c) {
+	// 		if(c === 0) { //la tabla se iniciualiza si esta vacia
+	// 			return Quiz.bulkCreate([ { question: 'Capital de Italia', answer: 'Roma' },
+	// 									 { question: 'Capital de Portugal', answer: 'Lisboa'}
+	// 									 ]).then(function() {
+	// 				console.log('Base de datos inicializada con datos');
+	// 			});
 
-		}
-		});
-}).catch(function(error) {
-	console.log("Error Sincronizando las tablas de la BBDD:", error);
-	process.exit(1);
-});
+	// 		}
+	// 		});
+	// }).catch(function(error) {
+	// 	console.log("Error Sincronizando las tablas de la BBDD:", error);
+	// 	process.exit(1);
+	// });
 
 exports.Quiz = Quiz; //exportar definicion de la tabla Quiz.	
