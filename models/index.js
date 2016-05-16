@@ -28,6 +28,13 @@ var sequelize = new Sequelize(url,
 // Importar la definicion de la tabla QUiz de quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 
+var Comment = sequelize.import(path.join(__dirname, 'comment'));
+
+//Relaciones entre modelos:
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
+
+
 
 	// // sequelize.sync() crea e inicializa tabla de preguntas en DB
 	// sequelize.sync()
@@ -48,3 +55,4 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 	// });
 
 exports.Quiz = Quiz; //exportar definicion de la tabla Quiz.	
+exports.Comment = Comment;
