@@ -53,3 +53,13 @@ exports.destroy = function(req, res, next) {
 
 	res.redirect("/session"); // redirect a Login
 };
+
+
+
+exports.loginRequired = function (req, res, next) {
+	if (req.session.user) {
+		next();
+	} else {
+		res.redirect('/session?redir=' + (req.param('redir') || req.rul));
+	}
+};
