@@ -82,7 +82,7 @@ exports.update = function(req, res, next) {
 	req.user.password = req.body.user.password;
 
 	//El password no puede estar vacio
-	if( ! req.boduy.user.password) { 
+	if( ! req.body.user.password) { 
 		req.flash('error', "El campo Password debe rellenarse.");
 		return res.render('users/edit', {user: req.user});
 	}
