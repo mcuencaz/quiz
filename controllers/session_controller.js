@@ -36,7 +36,7 @@ exports.create = function(req, res, next) {
 			req.session.user = {id:user.id, username: user.username, isAdmin: user.isAdmin, 
 					fecha: new Date().getTime()+120000};
 
-			res.redirect(redir); //redirreccion a redir
+			res.redirect(redir); // redirreccion a redir
 		} else {
 			req.flash('error', 'La autentificación ha fallado. Reinténtelo otra vez.');
 			res.redirect("/session?redir="+redir);
