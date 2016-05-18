@@ -43,6 +43,13 @@ app.use(function(req, res, next) {
     //Hacer visible req.session en las vistas
     res.locals.session = req.session;
 
+    if (req.session.user){
+        if (req.session.user.fecha - new Date().getTime() <= 0)
+            delete req.session.user;
+        else 
+            req.session.user.fecha = new Date().getTime()+120000;
+    }
+
     next();
 });
 

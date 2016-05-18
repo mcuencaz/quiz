@@ -33,7 +33,8 @@ exports.create = function(req, res, next) {
 	authenticate(login, password).then(function(user) {
 		if (user) {
 
-			req.session.user = {id:user.id, username: user.username, fecha: new Date().getTime()+120000};
+			req.session.user = {id:user.id, username: user.username, isAdmin: user.isAdmin, 
+					fecha: new Date().getTime()+120000};
 
 			res.redirect(redir); //redirreccion a redir
 		} else {
